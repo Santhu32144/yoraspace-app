@@ -1,0 +1,127 @@
+import { View, Text, TouchableOpacity, Platform, ScrollView, StatusBar } from 'react-native';
+import { styled } from 'nativewind';
+import { useState } from 'react';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+const StyledView = styled(View);
+const StyledText = styled(Text);
+const StyledTouchableOpacity = styled(TouchableOpacity);
+const StyledScrollView = styled(ScrollView);
+
+const moods = [
+  { emoji: '😌', label: 'Peaceful' },
+  { emoji: '😊', label: 'Joyful' },
+  { emoji: '😔', label: 'Melancholy' },
+  { emoji: '😤', label: 'Frustrated' },
+  { emoji: '🤔', label: 'Thoughtful' },
+  { emoji: '😫', label: 'Tired' },
+  { emoji: '✨', label: 'Inspired' },
+  { emoji: '🌱', label: 'Growing' },
+];
+
+const tabs = [
+  { icon: '☀️', label: 'Anchor' },
+  { icon: '🔄', label: 'Reconnect' },
+  { icon: '🌊', label: 'Wall' },
+  { icon: '👤', label: 'Profile' },
+];
+
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+
+type HomeScreenProps = {
+  navigation: NativeStackNavigationProp<any>;
+  route: {
+    params?: {
+      message?: string;
+    };
+  };
+};
+
+export function HomeScreen({ navigation, route }: HomeScreenProps) {
+  const [selectedMood, setSelectedMood] = useState<number | null>(null);
+  const [activeTab, setActiveTab] = useState(0);
+  const [showMessage, setShowMessage] = useState(false);
+  const insets = useSafeAreaInsets();
+
+  useEffect(() => {
+    if (route.params?.message) {
+      setShowMessage(true);
+      const timer = setTimeout(() => {
+        setShowMessage(false);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [route.params?.message]);
+
+  return (
+    <StyledView style={{ flex: 1, backgroundColor: '#362360' }}>
+      <StatusBar barStyle="light-content" backgroundColor="#362360" />
+      <StyledView style={{ paddingTop: insets.top + 8, paddingHorizontal: 24, paddingBottom: 16 }}>
+        <StyledText className="text-white text-xl font-bold mb-2">YoraSpace</StyledText>
+        <StyledText className="text-white text-base opacity-80">Your mindful social space</StyledText>
+      </StyledView>
+
+      <StyledScrollView 
+        style={{ flex: 1, paddingHorizontal: 24 }}
+        showsVerticalScrollIndicator={false}
+      >
+        <StyledText className="text-white text-xl font-bold mb-6">
+          How are you feeling right now?
+        </StyledText>
+
+        <StyledView className="flex-row flex-wrap justify-between">
+          {moods.map((mood, index) => (
+            <StyledTouchableOpacity
+              key={index}
+              className={`w-[48%] ${selectedMood === index ? 'bg-white/20' : 'bg-white/10'} 
+                rounded-xl p-4 mb-4 items-center active:scale-95`}
+              onPress={() => {
+                setSelectedMood(index);
+                navigation.navigate('Reflection', { selectedMood: mood });
+              }}
+            >
+              <StyledText className="text-4xl mb-2">{mood.emoji}</StyledText>
+              <StyledText className="text-white text-center">{mood.label}</StyledText>
+            </StyledTouchableOpacity>
+          ))}
+        </StyledView>
+
+        {showMessage && (
+          <StyledView className="bg-white/20 p-4 rounded-xl mb-4">
+            <StyledText className="text-white text-center">{route.params?.message}</StyledText>
+          </StyledView>
+        )}
+        
+        <StyledView style={{ height: 80 }} />
+      </StyledScrollView>
+
+      <StyledView 
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          paddingBottom: Math.max(insets.bottom, 16),
+          backgroundColor: 'rgba(255, 255, 255, 0.1)',
+          borderTopWidth: 1,
+          borderTopColor: 'rgba(255, 255, 255, 0.05)'
+        }}
+      >
+        <StyledView className="flex-row justify-around py-4">
+          {tabs.map((tab, index) => (
+            <StyledTouchableOpacity 
+              key={index}
+              className={`items-center px-4 py-2 rounded-full ${activeTab === index ? 'bg-white/10' : ''}`}
+              onPress={() => setActiveTab(index)}
+            >
+              <StyledText className="text-2xl mb-1">{tab.icon}</StyledText>
+              <StyledText className={`text-white ${activeTab === index ? 'font-bold' : ''}`}>
+                {tab.label}
+              </StyledText>
+            </StyledTouchableOpacity>
+          ))}
+        </StyledView>
+      </StyledView>
+    </StyledView>
+  );
+}

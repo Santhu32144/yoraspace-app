@@ -1,20 +1,144 @@
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { Text } from 'react-native';
+import { SplashScreen } from './app/screens/SplashScreen';
+import { LoginScreen } from './app/screens/auth/LoginScreen';
+import { RegisterScreen } from './app/screens/auth/RegisterScreen';
+import { HomeScreen } from './app/screens/HomeScreen';
+import { ReconnectScreen } from './app/screens/main/ReconnectScreen';
+import { WallScreen } from './app/screens/main/WallScreen';
+import { ProfileScreen } from './app/screens/main/ProfileScreen';
+import { ReflectionScreen } from './app/screens/main/ReflectionScreen';
+import { colors } from './app/theme/colors';
 
-export default function App() {
+type RootStackParamList = {
+  Splash: undefined;
+  Auth: undefined;
+  Main: undefined;
+  Reflection: {
+    selectedMood: {
+      emoji: string;
+      label: string;
+    };
+  };
+};
+
+type AuthStackParamList = {
+  Login: undefined;
+  Register: undefined;
+};
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
+const AuthStack = createNativeStackNavigator<AuthStackParamList>();
+const Tab = createBottomTabNavigator();
+
+function AuthNavigator() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <AuthStack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <AuthStack.Screen name="Login" component={LoginScreen} />
+      <AuthStack.Screen name="Register" component={RegisterScreen} />
+    </AuthStack.Navigator>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+function MainTabs() {
+  return (
+    <Tab.Navigator
+      screenOptions={{
+        headerShown: false,
+        tabBarStyle: {
+          backgroundColor: colors.surface.dark,
+          borderTopColor: 'rgba(255, 255, 255, 0.05)',
+        },
+        tabBarActiveTintColor: colors.text.dark,
+        tabBarInactiveTintColor: 'rgba(255, 255, 255, 0.5)',
+      }}
+    >
+      <Tab.Screen 
+        name="RealityAnchor" 
+        component={HomeScreen}
+        options={{
+          tabBarLabel: 'Reality',
+          tabBarIcon: ({ focused }) => (
+            <Text style={{ fontSize: 24, opacity: focused ? 1 : 0.5 }}>☀️</Text>
+          ),
+        }}
+      />
+      <Tab.Screen 
+        name="Reconnect" 
+        component={ReconnectScreen}
+        options={{
+          tabBarLabel: 'Reconnect',
+          tabBarIcon: ({ focused }) => (
+            <Text style={{ fontSize: 24, opacity: focused ? 1 : 0.5 }}>🔄</Text>
+          ),
+        }}
+      />
+      <Tab.Screen 
+        name="Wall" 
+        component={WallScreen}
+        options={{
+          tabBarLabel: 'Wall',
+          tabBarIcon: ({ focused }) => (
+            <Text style={{ fontSize: 24, opacity: focused ? 1 : 0.5 }}>🌊</Text>
+          ),
+        }}
+      />
+      <Tab.Screen 
+        name="Profile" 
+        component={ProfileScreen}
+        options={{
+          tabBarLabel: 'Profile',
+          tabBarIcon: ({ focused }) => (
+            <Text style={{ fontSize: 24, opacity: focused ? 1 : 0.5 }}>👤</Text>
+          ),
+        }}
+      />
+    </Tab.Navigator>
+  );
+}
+
+export default function App() {
+  return (
+    <SafeAreaProvider>
+      <NavigationContainer>
+        <Stack.Navigator
+          initialRouteName="Splash"
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
+          <Stack.Screen name="Splash" component={SplashScreen} />
+          <Stack.Screen name="Auth" component={AuthNavigator} />
+          <Stack.Screen 
+            name="Main" 
+            component={MainTabs}
+            options={{ gestureEnabled: false }}
+          />
+          <Stack.Screen 
+            name="Reflection" 
+            component={ReflectionScreen}
+            options={{
+              headerShown: true,
+              headerTitle: "Reflect on your feelings",
+              headerStyle: {
+                backgroundColor: colors.accent.purple,
+              },
+              headerTintColor: '#fff',
+              headerBackTitle: "Back",
+              animation: 'slide_from_right'
+            }}
+          />
+        </Stack.Navigator>
+        <StatusBar style="light" backgroundColor={colors.accent.purple} />
+      </NavigationContainer>
+    </SafeAreaProvider>
+  );
+}
