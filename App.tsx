@@ -1,18 +1,18 @@
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { StatusBar } from 'expo-status-bar';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { Text } from 'react-native';
-import { SplashScreen } from './app/screens/SplashScreen';
-import { LoginScreen } from './app/screens/auth/LoginScreen';
-import { RegisterScreen } from './app/screens/auth/RegisterScreen';
-import { HomeScreen } from './app/screens/HomeScreen';
-import { ReconnectScreen } from './app/screens/main/ReconnectScreen';
-import { WallScreen } from './app/screens/main/WallScreen';
-import { ProfileScreen } from './app/screens/main/ProfileScreen';
-import { ReflectionScreen } from './app/screens/main/ReflectionScreen';
-import { colors } from './app/theme/colors';
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { StatusBar } from "expo-status-bar";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import { Text } from "react-native";
+import { SplashScreen } from "./app/screens/SplashScreen";
+import { LoginScreen } from "./app/screens/auth/LoginScreen";
+import { RegisterScreen } from "./app/screens/auth/RegisterScreen";
+import { HomeScreen } from "./app/screens/HomeScreen";
+import { ReconnectScreen } from "./app/screens/main/ReconnectScreen";
+import { WallScreen } from "./app/screens/main/WallScreen";
+import { ProfileScreen } from "./app/screens/main/ProfileScreen";
+import { ReflectionScreen } from "./app/screens/main/ReflectionScreen";
+import { colors } from "./app/theme/colors";
 
 type RootStackParamList = {
   Splash: undefined;
@@ -55,47 +55,47 @@ function MainTabs() {
         headerShown: false,
         tabBarStyle: {
           backgroundColor: colors.surface.dark,
-          borderTopColor: 'rgba(255, 255, 255, 0.05)',
+          borderTopColor: "rgba(255, 255, 255, 0.05)",
         },
         tabBarActiveTintColor: colors.text.dark,
-        tabBarInactiveTintColor: 'rgba(255, 255, 255, 0.5)',
+        tabBarInactiveTintColor: "rgba(255, 255, 255, 0.5)",
       }}
     >
-      <Tab.Screen 
-        name="RealityAnchor" 
+      <Tab.Screen
+        name="RealityAnchor"
         component={HomeScreen}
         options={{
-          tabBarLabel: 'Reality',
+          tabBarLabel: "Reality",
           tabBarIcon: ({ focused }) => (
             <Text style={{ fontSize: 24, opacity: focused ? 1 : 0.5 }}>☀️</Text>
           ),
         }}
       />
-      <Tab.Screen 
-        name="Reconnect" 
+      <Tab.Screen
+        name="Reconnect"
         component={ReconnectScreen}
         options={{
-          tabBarLabel: 'Reconnect',
+          tabBarLabel: "Reconnect",
           tabBarIcon: ({ focused }) => (
             <Text style={{ fontSize: 24, opacity: focused ? 1 : 0.5 }}>🔄</Text>
           ),
         }}
       />
-      <Tab.Screen 
-        name="Wall" 
+      <Tab.Screen
+        name="Wall"
         component={WallScreen}
         options={{
-          tabBarLabel: 'Wall',
+          tabBarLabel: "Wall",
           tabBarIcon: ({ focused }) => (
             <Text style={{ fontSize: 24, opacity: focused ? 1 : 0.5 }}>🌊</Text>
           ),
         }}
       />
-      <Tab.Screen 
-        name="Profile" 
+      <Tab.Screen
+        name="Profile"
         component={ProfileScreen}
         options={{
-          tabBarLabel: 'Profile',
+          tabBarLabel: "Profile",
           tabBarIcon: ({ focused }) => (
             <Text style={{ fontSize: 24, opacity: focused ? 1 : 0.5 }}>👤</Text>
           ),
@@ -117,13 +117,13 @@ export default function App() {
         >
           <Stack.Screen name="Splash" component={SplashScreen} />
           <Stack.Screen name="Auth" component={AuthNavigator} />
-          <Stack.Screen 
-            name="Main" 
+          <Stack.Screen
+            name="Main"
             component={MainTabs}
             options={{ gestureEnabled: false }}
           />
-          <Stack.Screen 
-            name="Reflection" 
+          <Stack.Screen
+            name="Reflection"
             component={ReflectionScreen}
             options={{
               headerShown: true,
@@ -131,9 +131,9 @@ export default function App() {
               headerStyle: {
                 backgroundColor: colors.accent.purple,
               },
-              headerTintColor: '#fff',
+              headerTintColor: "#fff",
               headerBackTitle: "Back",
-              animation: 'slide_from_right'
+              animation: "slide_from_right",
             }}
           />
         </Stack.Navigator>
