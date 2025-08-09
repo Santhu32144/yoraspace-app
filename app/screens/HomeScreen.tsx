@@ -14,6 +14,7 @@ import { MoodTimeline } from '../components/MoodTimeline';
 import { BreathingExercise } from '../components/BreathingExercise';
 import { DailyQuote } from '../components/DailyQuote';
 import { StorageService, MoodEntry } from '../services/StorageService';
+import { useTheme } from '../theme/ThemeContext';
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -54,6 +55,7 @@ export function HomeScreen({ navigation, route }: HomeScreenProps) {
   const [showMessage, setShowMessage] = useState(false);
   const [moodHistory, setMoodHistory] = useState<MoodEntry[]>([]);
   const insets = useSafeAreaInsets();
+  const { colors } = useTheme();
 
   // Load mood history from storage
   useEffect(() => {
@@ -77,8 +79,8 @@ export function HomeScreen({ navigation, route }: HomeScreenProps) {
   }, [route.params?.message]);
 
   return (
-    <StyledView style={{ flex: 1, backgroundColor: "#362360" }}>
-      <StatusBar barStyle="light-content" backgroundColor="#362360" />
+    <StyledView style={{ flex: 1, backgroundColor: colors.primary }}>
+      <StatusBar barStyle="light-content" backgroundColor={colors.primary} />
       <StyledView
         style={{
           paddingTop: insets.top + 8,
@@ -117,9 +119,12 @@ export function HomeScreen({ navigation, route }: HomeScreenProps) {
                 <StyledTouchableOpacity
                   key={index}
                   className={`w-[48%] ${
-                    selectedMood === index ? "bg-white/20" : "bg-white/10"
+                    selectedMood === index ? "bg-white/20" : "bg-surface"
                   } 
                     rounded-xl p-4 mb-4 items-center active:scale-95 transition-all duration-200`}
+                  style={{
+                    backgroundColor: selectedMood === index ? 'rgba(255, 255, 255, 0.2)' : colors.surface
+                  }}
                   onPress={() => {
                     setSelectedMood(index);
                     navigation.navigate('Reflection', { selectedMood: mood });
@@ -144,7 +149,8 @@ export function HomeScreen({ navigation, route }: HomeScreenProps) {
             />
 
             <StyledTouchableOpacity
-              className="bg-white/10 p-4 rounded-xl mt-6 mb-4"
+              className="p-4 rounded-xl mt-6 mb-4"
+              style={{ backgroundColor: colors.surface }}
               onPress={() => setShowBreathing(true)}
             >
               <StyledText className="text-white text-center font-semibold">

@@ -114,3 +114,6 @@ export const feedItems: FeedItem[] = [
         author: 'Buddha'
     }
 ]
+st feed = [
+  // Add feed data here
+];

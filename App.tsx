@@ -12,7 +12,7 @@ import { ReconnectScreen } from "./app/screens/main/ReconnectScreen";
 import { WallScreen } from "./app/screens/main/WallScreen";
 import { ProfileScreen } from "./app/screens/main/ProfileScreen";
 import { ReflectionScreen } from "./app/screens/main/ReflectionScreen";
-import { colors } from "./app/theme/colors";
+import { ThemeProvider, useTheme } from "./app/theme/ThemeContext";
 
 type RootStackParamList = {
   Splash: undefined;
@@ -49,15 +49,16 @@ function AuthNavigator() {
 }
 
 function MainTabs() {
+  const { colors } = useTheme();
   return (
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: colors.surface.dark,
+          backgroundColor: colors.surface,
           borderTopColor: "rgba(255, 255, 255, 0.05)",
         },
-        tabBarActiveTintColor: colors.text.dark,
+        tabBarActiveTintColor: colors.text,
         tabBarInactiveTintColor: "rgba(255, 255, 255, 0.5)",
       }}
     >
@@ -105,40 +106,51 @@ function MainTabs() {
   );
 }
 
+function AppContent() {
+  const { colors } = useTheme();
+  return (
+    <>
+      <Stack.Navigator
+        initialRouteName="Splash"
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
+        <Stack.Screen name="Splash" component={SplashScreen} />
+        <Stack.Screen name="Auth" component={AuthNavigator} />
+        <Stack.Screen
+          name="Main"
+          component={MainTabs}
+          options={{ gestureEnabled: false }}
+        />
+        <Stack.Screen
+          name="Reflection"
+          component={ReflectionScreen}
+          options={{
+            headerShown: true,
+            headerTitle: "Reflect on your feelings",
+            headerStyle: {
+              backgroundColor: colors.accent,
+            },
+            headerTintColor: "#fff",
+            headerBackTitle: "Back",
+            animation: "slide_from_right",
+          }}
+        />
+      </Stack.Navigator>
+      <StatusBar style="light" backgroundColor={colors.accent} />
+    </>
+  );
+}
+
 export default function App() {
   return (
     <SafeAreaProvider>
-      <NavigationContainer>
-        <Stack.Navigator
-          initialRouteName="Splash"
-          screenOptions={{
-            headerShown: false,
-          }}
-        >
-          <Stack.Screen name="Splash" component={SplashScreen} />
-          <Stack.Screen name="Auth" component={AuthNavigator} />
-          <Stack.Screen
-            name="Main"
-            component={MainTabs}
-            options={{ gestureEnabled: false }}
-          />
-          <Stack.Screen
-            name="Reflection"
-            component={ReflectionScreen}
-            options={{
-              headerShown: true,
-              headerTitle: "Reflect on your feelings",
-              headerStyle: {
-                backgroundColor: colors.accent.purple,
-              },
-              headerTintColor: "#fff",
-              headerBackTitle: "Back",
-              animation: "slide_from_right",
-            }}
-          />
-        </Stack.Navigator>
-        <StatusBar style="light" backgroundColor={colors.accent.purple} />
-      </NavigationContainer>
+      <ThemeProvider>
+        <NavigationContainer>
+          <AppContent />
+        </NavigationContainer>
+      </ThemeProvider>
     </SafeAreaProvider>
   );
 }
