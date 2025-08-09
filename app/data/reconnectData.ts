@@ -69,50 +69,83 @@ export const projects: Project[] = [
 export const sessions: Session[] = [
   {
     id: '1',
-    title: 'Guided Meditation',
-    with: 'with Sarah',
-    duration: 15,
+    title: 'Morning Grounding Meditation',
+    with: 'with Sarah Chen',
+    duration: 5,
     type: 'Meditation',
   },
   {
     id: '2',
-    title: 'The Art of Stillness',
-    with: 'with Pico Iyer',
-    duration: 45,
+    title: 'Moving Through Creative Blocks',
+    with: 'with Marcus Rivera',
+    duration: 12,
     type: 'Masterclass',
   },
   {
     id: '3',
-    title: 'Mindful Conversation',
-    with: 'with Community',
-    duration: 30,
+    title: 'Bee-conversation: Finding Belonging',
+    with: 'with Dr. Amara Okafor',
+    duration: 15,
     type: 'Conversation',
+  },
+  {
+    id: '4',
+    title: 'From Overwhelm to Ease',
+    with: 'with Jordan Walsh',
+    duration: 8,
+    type: 'Meditation',
   },
 ];
 
 export const connectRooms: ConnectRoom[] = [
   {
     id: '1',
-    title: 'Gratitude Circle',
-    description: 'Share what you\'re thankful for.',
-    members: 12,
-    capacity: 20,
-    recentMessages: [
-        {user: 'Alex', message: 'Thankful for a sunny day!', timestamp: '5m ago'},
-        {user: 'Maria', message: 'Grateful for my family.', timestamp: '2m ago'},
-    ]
-  },
-   {
-    id: '2',
-    title: 'Mindful Hobbyists',
-    description: 'Discuss hobbies that promote mindfulness.',
+    title: 'Unlearning Hustle',
+    description: 'Exploring rest, boundaries, and sustainable living',
     members: 8,
-    capacity: 15,
+    capacity: 12,
     recentMessages: [
-        {user: 'Jian', message: 'Knitting is my go-to.', timestamp: '10m ago'},
-        {user: 'Chloe', message: 'Anyone into mindful photography?', timestamp: '3m ago'},
+      {
+        user: 'River Sodi',
+        message: "I'm learning that saying no to others means saying yes to myself.",
+        timestamp: "3h ago"
+      }
     ]
   },
+  {
+    id: '2',
+    title: 'Full Moon Feels',
+    description: 'Honoring emotions and lunar cycles',
+    members: 11,
+    capacity: 12,
+    recentMessages: [
+      {
+        user: 'Moonchild',
+        message: "Letting go of the need to have everything figured out.",
+        timestamp: "5h ago"
+      }
+    ]
+  },
+  {
+    id: '3',
+    title: 'Mindful Moments',
+    description: 'Sharing daily mindfulness practices',
+    members: 7,
+    capacity: 12,
+    recentMessages: [
+      { user: 'Kira', message: 'Starting each day with 5 minutes of breath awareness', timestamp: '2h ago' }
+    ]
+  },
+  {
+    id: '4',
+    title: 'Creative Flow',
+    description: 'Supporting each other in creative expression',
+    members: 9,
+    capacity: 12,
+    recentMessages: [
+      { user: 'ArtSpirit', message: 'Remember, there are no mistakes in art, only happy accidents!', timestamp: '1h ago' }
+    ]
+  }
 ];
 
 export const feedItems: FeedItem[] = [

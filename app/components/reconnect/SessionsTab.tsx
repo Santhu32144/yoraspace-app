@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
 import { sessions } from '../../data/reconnectData';
 import { Session } from '../../types/reconnect';
-import { useTheme } from '../../hooks/useTheme';
+import { useTheme } from '../../theme/ThemeContext';
 import { LinearGradient } from 'expo-linear-gradient';
 
 const SessionCard = ({ item }: { item: Session }) => {
@@ -22,24 +22,36 @@ const SessionCard = ({ item }: { item: Session }) => {
   };
 
   return (
-    <LinearGradient
-      colors={[colors.card, colors.cardMuted]}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 1, y: 1 }}
-      style={styles.card}
-    >
-      <View style={styles.cardContent}>
-        <Text style={styles.icon}>{getIconForType(item.type)}</Text>
-        <View style={styles.textContainer}>
-          <Text style={[styles.title, { color: colors.text }]}>{item.title}</Text>
-          <Text style={[styles.with, { color: colors.textMuted }]}>{item.with}</Text>
-          <Text style={[styles.duration, { color: colors.textMuted }]}>{item.duration} min • {item.type}</Text>
+    <View style={styles.cardWrapper}>
+      <LinearGradient
+        colors={[colors.card, colors.cardMuted]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={styles.card}
+      >
+        <View style={styles.cardContent}>
+          <Text style={styles.icon}>{getIconForType(item.type)}</Text>
+          <View style={styles.textContainer}>
+            <Text style={[styles.title, { color: colors.text }]}>{item.title}</Text>
+            <Text style={[styles.with, { color: colors.textMuted }]}>{item.with}</Text>
+            <Text style={[styles.duration, { color: colors.textMuted }]}>
+              {item.duration} min • {item.type}
+            </Text>
+          </View>
         </View>
-        <TouchableOpacity style={[styles.button, { backgroundColor: colors.primary }]}>
-          <Text style={[styles.buttonText, { color: colors.background }]}>Join</Text>
-        </TouchableOpacity>
-      </View>
-    </LinearGradient>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity 
+            style={[styles.button, { backgroundColor: colors.primary }]}
+            activeOpacity={0.8}
+          >
+            <Text style={[styles.buttonText, { color: '#FFFFFF' }]}>Join Session</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.wisdomButton, { backgroundColor: 'rgba(255, 255, 255, 0.1)' }]}>
+            <Text style={[styles.wisdomButtonText, { color: colors.textMuted }]}>Save to Wisdom</Text>
+          </TouchableOpacity>
+        </View>
+      </LinearGradient>
+    </View>
   );
 };
 
@@ -50,6 +62,7 @@ const SessionsTab = () => {
       renderItem={({ item }) => <SessionCard item={item} />}
       keyExtractor={(item) => item.id}
       contentContainerStyle={styles.container}
+      showsVerticalScrollIndicator={false}
     />
   );
 };
@@ -58,17 +71,17 @@ const styles = StyleSheet.create({
   container: {
     padding: 16,
   },
-  card: {
-    borderRadius: 16,
-    padding: 16,
+  cardWrapper: {
     marginBottom: 16,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.1,
-    shadowRadius: 10,
-    elevation: 5,
+    borderRadius: 20,
+    overflow: 'hidden',
+  },
+  card: {
+    borderRadius: 20,
+    overflow: 'hidden',
   },
   cardContent: {
+    padding: 20,
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -80,25 +93,42 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold',
+    marginBottom: 4,
   },
   with: {
     fontSize: 14,
-    marginTop: 2,
+    marginBottom: 2,
   },
   duration: {
     fontSize: 12,
-    marginTop: 2,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    padding: 20,
+    paddingTop: 0,
+    gap: 8,
   },
   button: {
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 20,
+    flex: 1,
+    paddingVertical: 16,
+    borderRadius: 12,
+    alignItems: 'center',
+  },
+  wisdomButton: {
+    flex: 1,
+    paddingVertical: 16,
+    borderRadius: 12,
+    alignItems: 'center',
   },
   buttonText: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: 'bold',
+  },
+  wisdomButtonText: {
+    fontSize: 16,
+    fontWeight: '600',
   },
 });
 

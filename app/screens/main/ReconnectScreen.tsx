@@ -5,6 +5,9 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { ReconnectTabs } from "../../components/reconnect/ReconnectTabs";
 import { Trail } from "../../types/reconnect";
 import { projects } from "../../data/reconnectData";
+import FeedTab from "../../components/reconnect/FeedTab";
+import SessionsTab from "../../components/reconnect/SessionsTab";
+import ConnectsTab from "../../components/reconnect/ConnectsTab";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -240,6 +243,12 @@ export function ReconnectScreen() {
             ))}
           </>
         );
+      case 'Sessions':
+        return <SessionsTab />;
+      case 'Connects':
+        return <ConnectsTab />;
+      case 'Feed':
+        return <FeedTab />;
       default:
         return null;
     }

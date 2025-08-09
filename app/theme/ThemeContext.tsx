@@ -5,14 +5,16 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 type ThemeMode = 'light' | 'dark';
 type MoodTheme = 'default' | 'peaceful' | 'joyful' | 'melancholy' | 'thoughtful';
 
-interface ThemeContextType {
+export interface ThemeContextType {
   theme: ThemeMode;
   toggleTheme: () => Promise<void>;
-  isLoading: boolean;
   colors: ThemeColors;
+  setMoodTheme: (mood: MoodTheme) => Promise<void>;
+  currentMoodTheme: MoodTheme;
+  isLoading: boolean;
 }
 
-interface ThemeColors {
+export interface ThemeColors {
   primary: string;
   primaryMuted: string;
   background: string;
@@ -151,15 +153,6 @@ const themes: Record<ThemeMode, Record<MoodTheme, ThemeColors>> = {
     }
   }
 };
-
-interface ThemeContextType {
-  theme: ThemeMode;
-  toggleTheme: () => Promise<void>;
-  colors: ThemeColors;
-  setMoodTheme: (mood: MoodTheme) => Promise<void>;
-  currentMoodTheme: MoodTheme;
-  isLoading: boolean;
-}
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
