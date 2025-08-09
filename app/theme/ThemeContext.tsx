@@ -5,6 +5,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 type ThemeMode = 'light' | 'dark';
 type MoodTheme = 'default' | 'peaceful' | 'joyful' | 'melancholy' | 'thoughtful';
 
+interface ThemeContextType {
+  theme: ThemeMode;
+  toggleTheme: () => Promise<void>;
+  isLoading: boolean;
+  colors: ThemeColors;
+}
+
 interface ThemeColors {
   primary: string;
   primaryMuted: string;
@@ -147,10 +154,11 @@ const themes: Record<ThemeMode, Record<MoodTheme, ThemeColors>> = {
 
 interface ThemeContextType {
   theme: ThemeMode;
-  toggleTheme: () => void;
+  toggleTheme: () => Promise<void>;
   colors: ThemeColors;
-  setMoodTheme: (mood: MoodTheme) => void;
+  setMoodTheme: (mood: MoodTheme) => Promise<void>;
   currentMoodTheme: MoodTheme;
+  isLoading: boolean;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -159,6 +167,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const systemColorScheme = useColorScheme();
   const [theme, setTheme] = useState<ThemeMode>(systemColorScheme || 'light');
   const [currentMoodTheme, setCurrentMoodTheme] = useState<MoodTheme>('default');
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     loadThemePreference();
@@ -172,6 +181,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       if (savedMoodTheme) setCurrentMoodTheme(savedMoodTheme as MoodTheme);
     } catch (error) {
       console.error('Error loading theme:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -200,7 +211,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       toggleTheme,
       colors: themes[theme][currentMoodTheme],
       setMoodTheme,
-      currentMoodTheme
+      currentMoodTheme,
+      isLoading
     }}>
       {children}
     </ThemeContext.Provider>

@@ -4,6 +4,7 @@ import { styled } from "nativewind";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ReconnectTabs } from "../../components/reconnect/ReconnectTabs";
 import { Trail } from "../../types/reconnect";
+import { projects } from "../../data/reconnectData";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -144,6 +145,95 @@ export function ReconnectScreen() {
                     }}
                   >
                     Begin Trail
+                  </StyledText>
+                </StyledTouchableOpacity>
+              </StyledView>
+            ))}
+          </>
+        );
+      case 'Projects':
+        return (
+          <>
+            {projects.map((project) => (
+              <StyledView
+                key={project.id}
+                className="mb-4 overflow-hidden"
+                style={{
+                  borderRadius: 20,
+                  backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                  borderWidth: 1,
+                  borderColor: 'rgba(255, 255, 255, 0.1)',
+                  padding: 20,
+                }}
+              >
+                <StyledText 
+                  style={{ 
+                    color: '#8B5CF6',
+                    fontSize: 12,
+                    fontWeight: '600',
+                    marginBottom: 4,
+                    textTransform: 'uppercase',
+                  }}
+                >
+                  {project.category}
+                </StyledText>
+                <StyledText 
+                  style={{ 
+                    color: '#FFFFFF',
+                    fontSize: 16,
+                    fontWeight: '600',
+                    marginBottom: 8,
+                  }}
+                >
+                  {project.title}
+                </StyledText>
+                <StyledText 
+                  style={{ 
+                    color: 'rgba(255, 255, 255, 0.6)',
+                    fontSize: 14,
+                    marginBottom: 12,
+                  }}
+                >
+                  {project.description}
+                </StyledText>
+                {project.steps.slice(0, 2).map((step, index) => (
+                  <StyledText 
+                    key={index}
+                    style={{ 
+                      color: 'rgba(255, 255, 255, 0.6)',
+                      fontSize: 14,
+                      marginBottom: 4,
+                    }}
+                  >
+                    • {step.title}
+                  </StyledText>
+                ))}
+                <StyledText 
+                  style={{ 
+                    color: 'rgba(255, 255, 255, 0.6)',
+                    fontSize: 14,
+                    marginTop: 8,
+                    marginBottom: 16,
+                  }}
+                >
+                  {project.steps.filter(step => step.completed).length}/{project.steps.length}
+                </StyledText>
+                <StyledTouchableOpacity
+                  style={{
+                    backgroundColor: '#8B5CF6',
+                    paddingVertical: 16,
+                    borderRadius: 12,
+                  }}
+                  className="items-center justify-center"
+                >
+                  <StyledText
+                    style={{
+                      color: "#FFFFFF",
+                      fontSize: 16,
+                      fontWeight: "600",
+                    }}
+                  >
+                    Start Project
                   </StyledText>
                 </StyledTouchableOpacity>
               </StyledView>

@@ -30,26 +30,39 @@ export const trails: Trail[] = [
 export const projects: Project[] = [
   {
     id: '1',
-    title: 'Build a Habit Tracker',
-    description: 'A personal project to track daily habits and goals.',
-    category: 'Personal Growth',
+    title: 'Launch a Story Zine',
+    description: 'Create a small collection of stories that matter to you',
+    category: 'Creative',
     steps: [
-      { title: 'Define Habits', completed: true },
-      { title: 'Design UI', completed: true },
-      { title: 'Develop Backend', completed: false },
-      { title: 'Test Application', completed: false },
+      { title: 'Choose Your Theme', completed: false },
+      { title: 'Write First Story', completed: false },
+      { title: 'Add Visuals', completed: false },
+      { title: 'Share Your Zine', completed: false },
     ],
   },
   {
     id: '2',
-    title: 'Learn to Meditate',
-    description: 'A 30-day challenge to build a consistent meditation practice.',
-    category: 'Mindfulness',
+    title: 'Create a Weekend Ritual',
+    description: 'Design a meaningful practice for your weekends',
+    category: 'Mindful',
     steps: [
-        { title: 'Day 1-5: Guided Sessions', completed: true },
-        { title: 'Day 6-15: Timed Sessions', completed: true },
-        { title: 'Day 16-30: Unguided Sessions', completed: false },
-    ]
+      { title: 'Identify What You Need', completed: false },
+      { title: 'Design Your Practice', completed: false },
+      { title: 'Test Run', completed: false },
+      { title: 'Refine and Commit', completed: false },
+    ],
+  },
+  {
+    id: '3',
+    title: 'Visual Gratitude Practice',
+    description: 'Create art from appreciation',
+    category: 'Creative',
+    steps: [
+      { title: 'Choose Your Medium', completed: false },
+      { title: 'Daily Gratitude Captures', completed: false },
+      { title: 'Create Collection', completed: false },
+      { title: 'Share Practice', completed: false },
+    ],
   }
 ];
 
@@ -114,6 +127,6 @@ export const feedItems: FeedItem[] = [
         author: 'Buddha'
     }
 ]
-st feed = [
-  // Add feed data here
-];
+// st feed = [
+//   // Add feed data here
+// ];
