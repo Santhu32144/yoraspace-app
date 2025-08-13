@@ -151,15 +151,27 @@ export const connectRooms: ConnectRoom[] = [
 export const feedItems: FeedItem[] = [
     {
         id: '1',
+        quote: 'The present moment is the only time over which we have dominion.',
+        author: 'Thich Nhất Hạnh'
+    },
+    {
+        id: '2',
         quote: 'The best way to capture moments is to pay attention. This is how we cultivate mindfulness.',
         author: 'Jon Kabat-Zinn'
     },
     {
-        id: '2',
+        id: '3',
         quote: 'Do not dwell in the past, do not dream of the future, concentrate the mind on the present moment.',
         author: 'Buddha'
+    },
+    {
+        id: '4',
+        quote: 'When you arise in the morning, think of what a precious privilege it is to be alive.',
+        author: 'Marcus Aurelius'
+    },
+    {
+        id: '5',
+        quote: 'You are the sky. Everything else is just the weather.',
+        author: 'Pema Chödrön'
     }
-]
-// st feed = [
-//   // Add feed data here
-// ];
+];

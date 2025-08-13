@@ -108,7 +108,7 @@ export function BreathingExercise({
         {selectedPattern.name}
       </StyledText>
       
-      <StyledText className="text-white/60 text-center mb-6 px-4">
+      <StyledText className="text-white/60 text-center mb-9 px-4">
         {selectedPattern.description}
       </StyledText>
 
